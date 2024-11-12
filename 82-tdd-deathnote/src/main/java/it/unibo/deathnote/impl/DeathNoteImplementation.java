@@ -1,32 +1,25 @@
 package it.unibo.deathnote.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImplementation implements DeathNote {
 
-    private final Map<String, String> deadHumans;
-
     public DeathNoteImplementation() {
-        this.deadHumans = new HashMap<>();
+        
     }
 
     @Override
-    public String getRule(final int ruleNumber) throws IllegalArgumentException {
-        try {
-            return DeathNote.RULES.get(ruleNumber);
-        } catch (final IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("There is no rule for this number", e);
-        }
+    public String getRule(int ruleNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRule'");
     }
 
     @Override
-    public void writeName(final String name) throws NullPointerException {
-        Objects.requireNonNull(name);
-        deadHumans.put(name, DEFAULT_DEATH_CAUSE);
+    public void writeName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'writeName'");
     }
 
     @Override
