@@ -41,13 +41,16 @@ public class MiniGUI {
         myPanel.add(write);
         final TextField myTextField = new TextField("Result");
         canvas.add(myTextField, BorderLayout.NORTH);
+        myTextField.setEditable(false);
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                myTextField.setText(Integer.toString(randomGenerator.nextInt()));
+                final int randomNumber = randomGenerator.nextInt();
+                System.out.println(randomNumber);
+                myTextField.setText(Integer.toString(randomNumber));
             }
         });
     }
@@ -62,10 +65,6 @@ public class MiniGUI {
          * specify the size of a window in pixel: it takes into account the
          * current resolution.
          */
-        /*
-         * Resize the frame to minimum size
-         */
-        frame.pack();
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
@@ -76,6 +75,10 @@ public class MiniGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        /*
+         * Resize the frame to minimum size
+         */
+        frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
