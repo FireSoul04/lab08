@@ -34,9 +34,9 @@ class TestDeathNote {
 
     @Test
     void checkValidRuleContent() {
-        for (int i = 0; i < DeathNote.RULES.size(); i++) {
-            assertNotNull(deathNote.getRule(i));
-            assertNotEquals("", deathNote.getRule(i));
+        for (final String rule : DeathNote.RULES) {
+            assertNotNull(rule);
+            assertNotEquals("", rule);
         }
     }
 
@@ -58,7 +58,7 @@ class TestDeathNote {
         try {
             deathNote.writeDeathCause(HEART_ATTACK);
             fail("Cannot set a death cause without a name of a human before");
-        } catch (final IllegalArgumentException e) {
+        } catch (final IllegalStateException e) {
 
         }
         deathNote.writeName(heartAttactHuman);
@@ -72,7 +72,7 @@ class TestDeathNote {
             fail("Thread crashed unexpectedly", e);
         }
         assertFalse(deathNote.writeDeathCause(HEART_ATTACK));
-        assertNotEquals(HEART_ATTACK, deathNote.getDeathCause(kartAccidentHuman));
+        assertNotEquals(KARTING_ACCIDENT, deathNote.getDeathCause(kartAccidentHuman));
     }
 
     @Test
@@ -87,7 +87,7 @@ class TestDeathNote {
         }
         deathNote.writeName(heartAttackHuman);
         assertEquals("", deathNote.getDeathDetails(heartAttackHuman));
-        assertTrue(deathNote.writeDetails(heartAttackHuman));
+        assertTrue(deathNote.writeDetails(RUN_DEATH_DETAILS));
         assertEquals(RUN_DEATH_DETAILS, deathNote.getDeathDetails(heartAttackHuman));
         deathNote.writeName(kartAccidentHuman);
         try {
@@ -96,6 +96,6 @@ class TestDeathNote {
             fail("Thread crashed unexpectedly", e);
         }
         assertFalse(deathNote.writeDetails(KART_DEATH_DETAILS));
-        assertNotEquals(KART_DEATH_DETAILS, deathNote.getDeathDetails(kartAccidentHuman));
+        assertNotEquals(RUN_DEATH_DETAILS, deathNote.getDeathDetails(kartAccidentHuman));
     }
 }
