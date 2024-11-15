@@ -1,14 +1,20 @@
 package it.unibo.mvc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unibo.mvc.api.DrawNumberController;
+import it.unibo.mvc.api.DrawNumberView;
 import it.unibo.mvc.controller.DrawNumberControllerImpl;
 import it.unibo.mvc.model.DrawNumberImpl;
-import it.unibo.mvc.view.DrawNumberSwingView;
 
 /**
  * Application entry-point.
  */
 public final class LaunchApp {
+
+    private static final int VIEWS_PER_CLASS = 3;
 
     private LaunchApp() { }
 
@@ -23,9 +29,18 @@ public final class LaunchApp {
      * @throws IllegalAccessException in case of reflection issues
      * @throws IllegalArgumentException in case of reflection issues
      */
-    public static void main(final String... args) {
+    @SuppressWarnings("unchecked")
+    public static void main(final String... args) throws Exception {
         final var model = new DrawNumberImpl();
         final DrawNumberController app = new DrawNumberControllerImpl(model);
-        app.addView(new DrawNumberSwingView());
+        final List<Class<DrawNumberView>> drawClasses = new ArrayList<>();
+        drawClasses.add((Class<DrawNumberView>)Class.forName("it.unibo.mvc.view.DrawNumberSwingView"));
+        drawClasses.add((Class<DrawNumberView>)Class.forName("it.unibo.mvc.view.DrawNumberConsoleView"));
+
+        for (final var drawClass : drawClasses) {
+            for (int i = 0; i < LaunchApp.VIEWS_PER_CLASS; i++) {
+                app.addView(drawClass.getConstructor().newInstance());
+            }
+        }
     }
 }
